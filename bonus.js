@@ -3,16 +3,12 @@
 // Rodné číslo je desetimístné číslo, které je dělitelné jedenácti beze zbytku; první dvojčíslí vyjadřuje poslední dvě číslice roku narození, druhé dvojčíslí vyjadřuje měsíc narození, u žen zvýšené o 50, třetí dvojčíslí vyjadřuje den narození; čtyřmístná koncovka je rozlišujícím znakem fyzických osob narozených v tomtéž kalendářním dnu.
 // Rodná čísla přidělená fyzickým osobám narozeným před 1. 1. 1954 mají stejnou strukturu, jsou však devítimístná s třímístnou koncovkou a nesplňují podmínku dělitelnosti jedenácti.
 
-// (rc % 11) - expected output 0
+
 
 
 function checkValidity() {
-    let inputValue = document.querySelector('input[name="rc"]').value;
+    let input = document.querySelector('input[name="rc"]').value;
 
-    let result = isValid(inputValue);
-}
-
-function isValid(input) {
     if (checkLength(input) == false) {
         return false;
     }
@@ -25,9 +21,18 @@ function isValid(input) {
         }
     }
 
-    checkDateValidity(input);
+    if (checkDateValidity(input, isOld) == false) {
+        return false;
+    }
 
+    showResult('Číslo je platné.', 'green');
+    return true;
 }
+
+
+
+
+
 
 function checkLength(input) {
     if (input.length < 9) {
@@ -53,8 +58,52 @@ function checkDivisionByEleven(input) {
     return true;
 }
 
-function checkDateValidity(input) {
+function checkDateValidity(input, isOld) {
+    // year, month/month+50, day
+    let year = parseInt(input.slice(0,2));
+    let month = parseInt(input.slice(2,2));
+    let day = parseInt(input.slice(4,2));
 
+    // <1953 = 9 long
+    if (isOld) {
+        if (year >= 54) {
+            showResult('Číslo je chybné.', 'red');
+            return false;
+        }
+    }
+
+    //months = 1-12
+    if (month > 12) {
+        month = month - 50;
+    }
+
+    if (month < 1 || month > 12) {
+        showResult('Číslo je chybné.', 'red');
+        return false;
+    }
+
+    //date validity
+    if (validateDay(year, month, day, isOld) == false) {
+        return false;
+    }
+    
+    return true;
+}
+
+function validateDay(year, month, day, isOld) {
+    if (isOld || year >= 54) {
+        year = 1900 + year;
+    } 
+    else {
+        year = 2000 + year;
+    }
+
+    if (day < 1 || day > 31 || (new Date(year, month, day)).getMonth() != month) {
+        showResult('Číslo je chybné.', 'red');
+        return false;
+    }
+
+    return true;
 }
 
 
@@ -69,7 +118,3 @@ function showResult(result, color) {
 document.querySelectorAll('input').forEach((element) => {
     element.addEventListener('change', checkValidity);
 });
-
-
-
-//if result = OK, color green pls
