@@ -1,0 +1,32 @@
+html { box-sizing: border-box; }
+*, ::before, :after { box-sizing: inherit; }
+
+body {
+	margin: 50px;
+	font-family: sans-serif;
+	font-size: 24px;
+	text-align: center;
+} 
+
+
+
+label {
+	display: block;
+}
+
+input {
+	height: 30px;
+	margin: 10px;
+	width: 150px;
+}
+
+#result {
+    margin-top: 40px;
+    font-weight: bold;
+}
+
+.RC-result {
+	font-size: 18px;
+	font-weight: normal;
+	color: #FF0000;
+}
