@@ -31,9 +31,6 @@ function checkValidity() {
 
 
 
-
-
-
 function checkLength(input) {
     if (input.length < 9) {
         showResult('Číslo je příliš krátké.', 'red');
@@ -61,8 +58,8 @@ function checkDivisionByEleven(input) {
 function checkDateValidity(input, isOld) {
     // year, month/month+50, day
     let year = parseInt(input.slice(0,2));
-    let month = parseInt(input.slice(2,2));
-    let day = parseInt(input.slice(4,2));
+    let month = parseInt(input.slice(2,4));
+    let day = parseInt(input.slice(4,6));
 
     // <1953 = 9 long
     if (isOld) {
@@ -97,6 +94,10 @@ function validateDay(year, month, day, isOld) {
     else {
         year = 2000 + year;
     }
+
+    console.log(year, month, day);
+
+    // date validity needs fixing
 
     if (day < 1 || day > 31 || (new Date(year, month, day)).getMonth() != month) {
         showResult('Číslo je chybné.', 'red');
