@@ -48,7 +48,7 @@ function checkLength(input) {
 function checkDivisionByEleven(input) {
     let inputAsNumber = parseInt(input);
     if ((inputAsNumber % 11) != 0) {
-        showResult('Číslo je chybné.', 'red');
+        showResult('Číslo je chybné. Musí byť deliteľné 11.', 'red');
         return false;
     }
 
@@ -64,7 +64,7 @@ function checkDateValidity(input, isOld) {
     // <1953 = 9 long
     if (isOld) {
         if (year >= 54) {
-            showResult('Číslo je chybné.', 'red');
+            showResult('Číslo je chybné. Nesprávna dĺžka podľa roku narodenia.', 'red');
             return false;
         }
     }
@@ -75,7 +75,7 @@ function checkDateValidity(input, isOld) {
     }
 
     if (month < 1 || month > 12) {
-        showResult('Číslo je chybné.', 'red');
+        showResult('Číslo je chybné. Neplatný mesiac.', 'red');
         return false;
     }
 
@@ -97,8 +97,10 @@ function validateDay(year, month, day, isOld) {
 
     console.log(year, month, day);
 
+    month = month - 1;
+
     if (day < 1 || day > 31 || (new Date(year, month, day)).getMonth() != month) {
-        showResult('Číslo je chybné.', 'red');
+        showResult('Číslo je chybné. Neplatný deň.', 'red');
         return false;
     }
 
