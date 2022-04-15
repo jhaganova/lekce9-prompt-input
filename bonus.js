@@ -97,8 +97,6 @@ function validateDay(year, month, day, isOld) {
 
     console.log(year, month, day);
 
-    // date validity needs fixing
-
     if (day < 1 || day > 31 || (new Date(year, month, day)).getMonth() != month) {
         showResult('Číslo je chybné.', 'red');
         return false;
